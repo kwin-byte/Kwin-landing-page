@@ -1,3 +1,6 @@
+[variables]
+NIXPACKS_INSTALL_DEV_DEPS = "true"
+
 [phases.build]
 cmds = ["npm run build"]
 

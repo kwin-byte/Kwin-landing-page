@@ -1,10 +1,16 @@
 import { createServer } from 'node:http'
+import { existsSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 import { join, extname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const distDir = join(fileURLToPath(new URL('.', import.meta.url)), 'dist')
 const port = Number(process.env.PORT) || 4173
+
+if (!existsSync(join(distDir, 'index.html'))) {
+  console.error('dist/index.html not found — run npm run build before starting')
+  process.exit(1)
+}
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
