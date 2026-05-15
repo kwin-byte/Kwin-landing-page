@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react'
+import { useI18n } from '../../i18n/I18nProvider'
 import { layoutBgImages, layoutSectionStyle } from './layoutBackgrounds'
 
 /** Một viewport, không cuộn trang — nội dung co trong h-dvh */
@@ -22,7 +23,6 @@ function getReducedMotionServerSnapshot() {
 type LeaderRow = {
   rank: number
   displayName: string
-  winTotal: string
   winStreak: number
   scoreUsd: number
 }
@@ -30,17 +30,6 @@ type LeaderRow = {
 const INITIALS = 'KMPTHABDLNQVGRJWZFCYXSUE'.split('')
 
 const NAME_SUFFIXES = ['VIP', 'pro', '2k', '99', '01', '88', '66', '7', '8', 'ce', 'ic', 'me', 'un', 'x', '3k', '44']
-
-/** Định dạng tổng thắng (USD) — gọn cho bảng xếp hạng */
-function formatWinUsd(usd: number): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    notation: 'compact',
-    compactDisplay: 'short',
-    maximumFractionDigits: 1
-  }).format(usd)
-}
 
 function randomDisplayName(used: Set<string>): string {
   for (let attempt = 0; attempt < 40; attempt++) {
@@ -77,7 +66,6 @@ function generateTopPlayers(count = 20): LeaderRow[] {
   return raw.map((r, i) => ({
     rank: i + 1,
     displayName: r.displayName,
-    winTotal: formatWinUsd(r.score),
     winStreak: r.winStreak,
     scoreUsd: r.score
   }))
@@ -100,6 +88,7 @@ function PodiumCard({
   row: LeaderRow
   variant: 'gold' | 'silver' | 'bronze'
 }) {
+  const { t, formatCurrency } = useI18n()
   const isGold = variant === 'gold'
 
   const shell =
@@ -147,7 +136,7 @@ function PodiumCard({
         <>
           <div className="pointer-events-none absolute inset-0 rounded-[inherit] bg-[radial-gradient(circle_at_top,rgba(255,184,0,0.2),transparent_55%)]" />
           <div className="absolute right-2 top-2 animate-pulse rounded-full bg-yellow-400 px-2 py-0.5 text-[9px] font-black text-black sm:right-3 sm:top-3 sm:text-[10px]">
-            HOT PLAYER
+            {t('statistics.hotPlayer')}
           </div>
         </>
       )}
@@ -161,7 +150,7 @@ function PodiumCard({
         <div
           className={`relative flex shrink-0 items-center justify-center rounded-full ${avatarSize} ${avatarRing}`}
           role="img"
-          aria-label={`Hạng ${place}`}
+          aria-label={t('statistics.rankAria', { place })}
         >
           <div
             className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-br from-white/40 via-white/5 to-black/15"
@@ -181,13 +170,11 @@ function PodiumCard({
         {row.displayName}
       </h3>
       <p className={`mb-1 line-clamp-1 text-[10px] sm:mb-1.5 sm:text-xs ${isGold ? 'text-yellow-100/70' : 'text-zinc-400'}`}>
-        {isGold ? (
-          <>Chuỗi thắng {row.winStreak} trận liên tiếp</>
-        ) : (
-          <>Chuỗi thắng {row.winStreak}</>
-        )}
+        {isGold
+          ? t('statistics.streakLong', { streak: row.winStreak })
+          : t('statistics.streakShort', { streak: row.winStreak })}
       </p>
-      <div className={`font-mono tabular-nums ${amountClass}`}>{row.winTotal}</div>
+      <div className={`font-mono tabular-nums ${amountClass}`}>{formatCurrency(row.scoreUsd)}</div>
     </div>
   )
 }
@@ -199,6 +186,8 @@ function LeaderboardRowPremium({
   row: LeaderRow
   streakBarWidthPct: number
 }) {
+  const { t, formatCurrency } = useI18n()
+
   return (
     <li className="group shrink-0 list-none">
       <div className="flex items-center justify-between gap-2 rounded-xl border border-white/5 bg-white/[0.03] px-2.5 py-2 transition-all duration-300 hover:border-yellow-500/30 hover:bg-yellow-500/[0.03] sm:gap-3 sm:rounded-2xl sm:px-3 sm:py-2.5">
@@ -220,16 +209,18 @@ function LeaderboardRowPremium({
                   style={{ width: `${streakBarWidthPct}%` }}
                 />
               </div>
-              <span className="text-[10px] text-zinc-400 sm:text-xs">WS {row.winStreak}</span>
+              <span className="text-[10px] text-zinc-400 sm:text-xs">
+                {t('statistics.winStreakAbbr', { streak: row.winStreak })}
+              </span>
             </div>
           </div>
         </div>
 
         <div className="shrink-0 text-right">
           <div className="font-mono text-sm font-black text-yellow-400 transition group-hover:scale-105 sm:text-base">
-            {row.winTotal}
+            {formatCurrency(row.scoreUsd)}
           </div>
-          <p className="text-[9px] text-zinc-500 sm:text-[10px]">USD</p>
+          <p className="text-[9px] text-zinc-500 sm:text-[10px]">{t('statistics.currency')}</p>
         </div>
       </div>
     </li>
@@ -279,6 +270,7 @@ function StatCard({ label, value }: { label: string; value: string }) {
 }
 
 export default function Statistics() {
+  const { m, t, formatNumber, formatCurrency } = useI18n()
   const [players] = useState<LeaderRow[]>(() => generateTopPlayers())
   const [onlineCount] = useState(() => 25000 + Math.floor(Math.random() * 8000))
   const [winRatePct] = useState(() => 96 + Math.random() * 2.2)
@@ -298,12 +290,12 @@ export default function Statistics() {
   const statsCards = useMemo(
     () =>
       [
-        ['Tổng thưởng hôm nay', formatWinUsd(totalPrizeUsd)],
-        ['Người chơi online', onlineCount.toLocaleString('en-US')],
-        ['Jackpot lớn nhất', first ? first.winTotal : '$0'],
-        ['Win Rate', `${winRatePct.toFixed(1)}%`]
+        [m.statistics.stats.totalPrizeToday, formatCurrency(totalPrizeUsd)],
+        [m.statistics.stats.playersOnline, formatNumber(onlineCount)],
+        [m.statistics.stats.biggestJackpot, first ? formatCurrency(first.scoreUsd) : formatCurrency(0)],
+        [m.statistics.stats.winRate, `${winRatePct.toFixed(1)}%`]
       ] as const,
-    [totalPrizeUsd, onlineCount, first, winRatePct]
+    [m.statistics.stats, totalPrizeUsd, onlineCount, first, winRatePct, formatCurrency, formatNumber]
   )
 
   const trackRef = useRef<HTMLDivElement>(null)
@@ -387,13 +379,14 @@ export default function Statistics() {
         <div className="mx-auto flex w-full max-w-7xl shrink-0 flex-col gap-1.5 sm:gap-2">
           <header className="shrink-0 text-center">
             <p className="mb-0.5 text-[10px] font-semibold uppercase tracking-[3px] text-yellow-500 sm:text-xs sm:tracking-[4px]">
-              bảng vàng danh dự
+              {t('statistics.eyebrow')}
             </p>
             <h2 className="text-xl font-black leading-tight sm:text-2xl md:text-3xl">
-              TOP <span className="text-yellow-400">NGƯỜI CHƠI</span>
+              {t('statistics.titlePrefix')}{' '}
+              <span className="text-yellow-400">{t('statistics.titleHighlight')}</span>
             </h2>
             <p className="mx-auto mt-0.5 line-clamp-1 max-w-2xl text-[10px] text-zinc-400 sm:text-xs">
-              Cao thủ 24h gần nhất · cập nhật realtime
+              {t('statistics.subtitle')}
             </p>
           </header>
 
@@ -425,12 +418,12 @@ export default function Statistics() {
           >
             <div className="flex shrink-0 items-center justify-between gap-2 border-b border-yellow-500/10 px-3 py-2 sm:px-4 sm:py-2.5">
               <div className="min-w-0">
-                <h3 className="truncate text-sm font-black sm:text-base">Chiến thắng nổi bật</h3>
-                <p className="truncate text-[10px] text-zinc-500 sm:text-xs">24h · Live</p>
+                <h3 className="truncate text-sm font-black sm:text-base">{t('statistics.leaderboardTitle')}</h3>
+                <p className="truncate text-[10px] text-zinc-500 sm:text-xs">{t('statistics.leaderboardPeriod')}</p>
               </div>
               <div className="flex shrink-0 items-center gap-1.5">
                 <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-400" />
-                <span className="text-[10px] text-zinc-400 sm:text-xs">Live</span>
+                <span className="text-[10px] text-zinc-400 sm:text-xs">{t('statistics.live')}</span>
               </div>
             </div>
 

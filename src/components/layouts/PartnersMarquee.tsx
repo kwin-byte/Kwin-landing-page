@@ -1,4 +1,5 @@
 import { useMemo, useSyncExternalStore, type CSSProperties } from 'react'
+import { useI18n } from '../../i18n/I18nProvider'
 
 function subscribeReducedMotion(onChange: () => void) {
   const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -33,6 +34,7 @@ const SHELL_PAD = 'py-1 md:py-2' as const
 const PARTNER_URL = 'https://khmerwin.vip/'
 
 export default function PartnersMarquee({ images, speed }: Props) {
+  const { t } = useI18n()
   const row = images
   const track = useMemo(() => duplicateForLoop(row), [row])
 
@@ -57,7 +59,7 @@ export default function PartnersMarquee({ images, speed }: Props) {
         target="_blank"
         rel="noopener noreferrer"
         className="partners-marquee-cell__link group/pm block w-full min-w-0 rounded-2xl outline-none transition-[box-shadow,transform] duration-200 focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
-        aria-label="Mở Khmer Win (khmerwin.vip)"
+        aria-label={t('partners.openSite')}
       >
         <div className="partners-marquee-cell__frame relative box-border flex w-full min-w-0 overflow-hidden rounded-2xl bg-black/15 ring-1 ring-white/10 transition-[box-shadow,transform,background-color] duration-200 group-hover/pm:scale-[1.02] group-hover/pm:bg-black/35 group-hover/pm:shadow-[0_0_0_1px_rgba(251,191,36,0.45),0_10px_28px_rgba(0,0,0,0.45)] group-hover/pm:ring-orange-400/50">
           <img
