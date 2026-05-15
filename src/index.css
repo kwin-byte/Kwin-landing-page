@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    scroll-padding-top: 6rem;
+  }
+  
+  body {
+    @apply font-sans antialiased;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-sleepiest-blue hover:bg-sleepiest-purple text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg;
+  }
+  
+  .btn-secondary {
+    @apply border-2 border-sleepiest-blue text-sleepiest-blue hover:bg-sleepiest-blue hover:text-white font-semibold py-3 px-8 rounded-full transition-all duration-300;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 transform hover:scale-105 hover:shadow-2xl;
+  }
+  
+  .text-gradient {
+    @apply bg-gradient-to-r from-sleepiest-blue to-sleepiest-purple bg-clip-text text-transparent;
+  }
+  
+  .section-padding {
+    @apply py-16 px-4 md:px-8 lg:px-16;
+  }
+}

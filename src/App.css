@@ -1,0 +1,626 @@
+/* Custom styles for Khmer Win landing with advanced animations */
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Scroll animations setup */
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s ease-out;
+}
+
+.scroll-animate.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Parallax background */
+.parallax-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(251, 146, 60, 0.1));
+  z-index: -1;
+  will-change: transform;
+}
+
+/* Custom animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.6),
+                0 0 40px rgba(251, 191, 36, 0.4),
+                0 0 60px rgba(251, 191, 36, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(251, 191, 36, 0.8),
+                0 0 50px rgba(251, 191, 36, 0.6),
+                0 0 70px rgba(251, 191, 36, 0.4);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-5px) rotate(2deg);
+  }
+  75% {
+    transform: translateY(-10px) rotate(-2deg);
+  }
+}
+
+@keyframes pulse-scale {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.8s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.8s ease-out;
+}
+
+/* Hover effects for cards */
+.card-hover {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.card-hover:hover::before {
+  left: 100%;
+}
+
+.card-hover:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(251, 191, 36, 0.4);
+  border-color: #fbbf24;
+}
+
+/* Button animations */
+.btn-primary {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  animation: glow 3s infinite;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 15px 40px rgba(251, 191, 36, 0.6);
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn-primary:active::after {
+  width: 300px;
+  height: 300px;
+}
+
+/* Mobile menu animation */
+.mobile-menu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobile-menu.open {
+  max-height: 500px;
+}
+
+/* Feature icons animation */
+.feature-icon {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.feature-icon:hover {
+  transform: scale(1.2) rotate(15deg);
+  animation: float 2s ease-in-out infinite;
+  filter: drop-shadow(0 10px 20px rgba(251, 191, 36, 0.5));
+}
+
+/* Gaming card effects */
+.game-card {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.game-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(251, 191, 36, 0.15), transparent);
+  transform: rotate(45deg);
+  transition: all 0.6s;
+  opacity: 0;
+}
+
+.game-card:hover::before {
+  animation: shine 0.6s ease-in-out;
+}
+
+.game-card:hover {
+  border-color: rgba(251, 191, 36, 0.6);
+  box-shadow: 0 0 30px rgba(251, 191, 36, 0.3);
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+/* Footer links */
+.footer-link {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.footer-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #fbbf24, #f59e0b);
+  transition: width 0.4s ease;
+}
+
+.footer-link:hover::after {
+  width: 100%;
+}
+
+/* Navigation animations */
+.nav-link {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #fbbf24, #f59e0b);
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::before {
+  width: 100%;
+}
+
+.nav-link:hover {
+  color: #fbbf24;
+  transform: translateY(-2px);
+}
+
+/* Responsive text sizes */
+@media (max-width: 640px) {
+  .hero-title {
+    font-size: 2.5rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  .section-title {
+    font-size: 2rem !important;
+  }
+  
+  .feature-title {
+    font-size: 1.125rem !important;
+  }
+}
+
+/* Loading animation */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+}
+
+/* Neon glow effect */
+.neon-glow {
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.8),
+               0 0 20px rgba(251, 191, 36, 0.6),
+               0 0 30px rgba(251, 191, 36, 0.4),
+               0 0 40px rgba(251, 191, 36, 0.2);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: linear-gradient(180deg, #1f2937, #111827);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  box-shadow: 0 0 15px rgba(251, 191, 36, 0.7);
+}
+
+/* Promotion banner animation */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.promo-banner {
+  animation: slideIn 1s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.promo-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Statistics counter animation */
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: scale(0.5) rotate(-10deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.stat-number {
+  animation: countUp 1s ease-out;
+}
+
+/* Gaming theme specific styles */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Glowing border effect */
+.glow-border {
+  border: 2px solid transparent;
+  background: linear-gradient(#000, #000) padding-box,
+              linear-gradient(135deg, #fbbf24, #f59e0b) border-box;
+  transition: all 0.4s ease;
+  position: relative;
+}
+
+.glow-border:hover {
+  box-shadow: 0 0 30px rgba(251, 191, 36, 0.6),
+              inset 0 0 20px rgba(251, 191, 36, 0.1);
+  transform: scale(1.02);
+}
+
+/* Hero secondary button without hover conflict */
+.btn-app {
+  border: 2px solid transparent;
+  color: #fbbf24;
+  background: linear-gradient(#000, #000) padding-box,
+              linear-gradient(135deg, #fbbf24, #f59e0b) border-box;
+  transition: color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+}
+
+.btn-app:hover {
+  color: #111827;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(251, 191, 36, 0.45);
+}
+
+/* Slide Games (marquee đối tác) */
+@keyframes partners-marquee-left {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.partners-marquee-track {
+  will-change: transform;
+}
+
+.partners-marquee-track--left {
+  animation: partners-marquee-left var(--partners-dur, 36s) linear infinite;
+}
+
+.partners-ticker-shell:hover .partners-marquee-track {
+  animation-play-state: paused;
+}
+
+.partners-logo-img {
+  opacity: 0.92;
+  transition: opacity 0.2s ease;
+}
+
+.partners-marquee-cell {
+  box-sizing: border-box;
+}
+
+.partners-marquee-cell__frame {
+  width: 100%;
+  min-width: 0;
+}
+
+.partners-marquee-cell__img {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.partners-marquee-cell__link {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .partners-marquee-cell__link .partners-marquee-cell__frame,
+  .partners-marquee-cell__link .partners-marquee-cell__img {
+    transition: none !important;
+  }
+
+  .partners-marquee-cell__link:hover .partners-marquee-cell__frame,
+  .partners-marquee-cell__link:hover .partners-marquee-cell__img {
+    transform: none !important;
+    filter: none !important;
+  }
+}
+
+.partners-ticker-shell:hover .partners-logo-img {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .partners-marquee-track--left {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* Particle effect background */
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(251, 191, 36, 0.6);
+  border-radius: 50%;
+  animation: float-particle 10s infinite linear;
+}
+
+@keyframes float-particle {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Magnetic button effect */
+.magnetic-btn {
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.magnetic-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Stagger animation for cards */
+.stagger-animation > * {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.stagger-animation > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-animation > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-animation > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-animation > *:nth-child(4) { animation-delay: 0.4s; }
+
+/* Text reveal animation */
+.text-reveal {
+  overflow: hidden;
+}
+
+.text-reveal span {
+  display: inline-block;
+  transform: translateY(100%);
+  animation: text-reveal-anim 0.8s ease-out forwards;
+}
+
+@keyframes text-reveal-anim {
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Loading skeleton */
+.skeleton {
+  background: linear-gradient(90deg, rgba(251, 191, 36, 0.1) 25%, rgba(251, 191, 36, 0.2) 50%, rgba(251, 191, 36, 0.1) 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
