@@ -24,7 +24,7 @@ const en: LocaleMessages = {
   },
   home: {
     logoAlt: 'Khmer Win',
-    headline: '1 BILLION TODAY, 1000 BILLION TOMORROW!',
+    headline: 'LEAD THE WAY TO VICTORY',
     tagline:
       'Khmer Win proudly brings you a completely free, diverse, and exciting game show system with high-value rewards!'
   },

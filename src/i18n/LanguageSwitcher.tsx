@@ -3,7 +3,8 @@ import FlagIcon from './FlagIcon'
 import { useI18n } from './I18nProvider'
 import { LOCALE_LABELS, LOCALE_NAMES, type Locale } from './types'
 
-const LOCALES: Locale[] = ['km', 'vi', 'en']
+/** Danh sách ngôn ngữ hiển thị trong dropdown — bỏ 'vi' để tạm ẩn Tiếng Việt */
+const LOCALES: Locale[] = ['km', 'en']
 
 type Props = {
   className?: string

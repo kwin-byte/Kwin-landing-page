@@ -20,7 +20,9 @@ const STORAGE_KEY = 'khmer-win-locale'
 function readStoredLocale(): Locale {
   try {
     const stored = localStorage.getItem(STORAGE_KEY)
-    if (stored === 'vi' || stored === 'en' || stored === 'km') return stored
+    if (stored === 'en' || stored === 'km') return stored
+    // 'vi' tạm ẩn khỏi dropdown — chuyển về km nếu đã lưu vi trước đó
+    if (stored === 'vi') return 'km'
   } catch {
     /* ignore */
   }

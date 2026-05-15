@@ -24,7 +24,7 @@ const vi: LocaleMessages = {
   },
   home: {
     logoAlt: 'Khmer Win',
-    headline: 'HÔM NAY 1 TỶ, NGÀY MAI 1000 TỶ!',
+    headline: 'DẪN ĐẦU ĐỂ CHIẾN THẮNG',
     tagline:
       'Khmer Win tự hào mang tới hệ thống chương trình trò chơi hoàn toàn miễn phí, đa dạng, hấp dẫn, tặng thưởng giá trị cao!'
   },
